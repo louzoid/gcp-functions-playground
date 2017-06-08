@@ -33,10 +33,12 @@ const gateway = braintree.connect({
 //gcloud beta functions deploy helloGET --stage-bucket [YOUR_STAGING_BUCKET_NAME] --trigger-http
 exports.braintreeToken = function braintreeToken(req, res) {
 
+    var clientId = req.query.clientId;
+
     res.set('Access-Control-Allow-Origin', "*");
     res.set('Access-Control-Allow-Methods', 'GET, POST');
 
-    console.log("Getting a token from merchant id (test):" + config.merchantId);
+    console.log("Getting a token for " + clientId + " from merchant id:" + config.merchantId);
 
     gateway.clientToken.generate({}, function (err, response) {
         if (err) {
@@ -170,4 +172,4 @@ function publishDonationMessage(messageBody) {
         });
 }
 
-//a different change
+//comment
