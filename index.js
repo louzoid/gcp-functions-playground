@@ -62,12 +62,13 @@ exports.braintreeDonation = function braintreeDonation(req, res) {
     //var contact = req.body.contactEmailOptIn;
     //var ga = req.body.giftAid;
     var nonce = req.body.payment_method_nonce;
+    var ourCompanyName = req.body.clientId;  //not cool but darn handy for our testing purposes
 
     if (!amount || amount === "" || amount === 0) {
         amount = 10;
     }
 
-    console.log("Submitting a donation to merchant id:" + config.merchantId);
+    console.log("Submitting a donation for " + ourCompanyName + " to merchant id:" + config.merchantId);
 
     gateway.transaction.sale({
         amount: amount,
@@ -75,7 +76,8 @@ exports.braintreeDonation = function braintreeDonation(req, res) {
         customer: {
             firstName: fn,
             lastName: ln,
-            email: email
+            email: email,
+            company: ourCompanyName
         },
         //customFields: {
         //    contactemailoptin: contact,
