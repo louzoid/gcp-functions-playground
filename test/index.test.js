@@ -15,169 +15,169 @@
 
 'use strict';
 
-const Buffer = require('safe-buffer').Buffer;
-const proxyquire = require(`proxyquire`).noCallThru();
-const sinon = require(`sinon`);
-const test = require(`ava`);
-const tools = require(`@google-cloud/nodejs-repo-tools`);
+//const Buffer = require('safe-buffer').Buffer;
+//const proxyquire = require(`proxyquire`).noCallThru();
+//const sinon = require(`sinon`);
+//const test = require(`ava`);
+//const tools = require(`@google-cloud/nodejs-repo-tools`);
 
-function getSample () {
-  const requestPromise = sinon.stub().returns(new Promise((resolve) => resolve(`test`)));
+//function getSample () {
+//  const requestPromise = sinon.stub().returns(new Promise((resolve) => resolve(`test`)));
 
-  return {
-    sample: proxyquire(`../`, {
-      'request-promise': requestPromise
-    }),
-    mocks: {
-      requestPromise: requestPromise
-    }
-  };
-}
+//  return {
+//    sample: proxyquire(`../`, {
+//      'request-promise': requestPromise
+//    }),
+//    mocks: {
+//      requestPromise: requestPromise
+//    }
+//  };
+//}
 
-function getMocks () {
-  const req = {
-    headers: {},
-    get: function (header) {
-      return this.headers[header];
-    }
-  };
-  sinon.spy(req, `get`);
+//function getMocks () {
+//  const req = {
+//    headers: {},
+//    get: function (header) {
+//      return this.headers[header];
+//    }
+//  };
+//  sinon.spy(req, `get`);
 
-  return {
-    req: req,
-    res: {
-      send: sinon.stub().returnsThis(),
-      json: sinon.stub().returnsThis(),
-      end: sinon.stub().returnsThis(),
-      status: sinon.stub().returnsThis()
-    }
-  };
-}
+//  return {
+//    req: req,
+//    res: {
+//      send: sinon.stub().returnsThis(),
+//      json: sinon.stub().returnsThis(),
+//      end: sinon.stub().returnsThis(),
+//      status: sinon.stub().returnsThis()
+//    }
+//  };
+//}
 
-test.beforeEach(tools.stubConsole);
-test.afterEach.always(tools.restoreConsole);
+//test.beforeEach(tools.stubConsole);
+//test.afterEach.always(tools.restoreConsole);
 
-test.serial(`http:helloworld: should error with no message`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.body = {};
-  httpSample.sample.helloWorld(mocks.req, mocks.res);
+//test.serial(`http:helloworld: should error with no message`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.body = {};
+//  httpSample.sample.helloWorld(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 400);
-  t.true(mocks.res.send.calledOnce);
-  t.is(mocks.res.send.firstCall.args[0], `No message defined!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 400);
+//  t.true(mocks.res.send.calledOnce);
+//  t.is(mocks.res.send.firstCall.args[0], `No message defined!`);
+//});
 
-test.serial(`http:helloworld: should log message`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.body = {
-    message: `hi`
-  };
-  httpSample.sample.helloWorld(mocks.req, mocks.res);
+//test.serial(`http:helloworld: should log message`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.body = {
+//    message: `hi`
+//  };
+//  httpSample.sample.helloWorld(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.end.calledOnce);
-  t.true(console.log.calledWith(`hi`));
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.end.calledOnce);
+//  t.true(console.log.calledWith(`hi`));
+//});
 
-test.serial(`http:helloHttp: should handle GET`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.method = `GET`;
-  httpSample.sample.helloHttp(mocks.req, mocks.res);
+//test.serial(`http:helloHttp: should handle GET`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.method = `GET`;
+//  httpSample.sample.helloHttp(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.is(mocks.res.send.firstCall.args[0], `Hello World!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.is(mocks.res.send.firstCall.args[0], `Hello World!`);
+//});
 
-test.serial(`http:helloHttp: should handle PUT`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.method = `PUT`;
-  httpSample.sample.helloHttp(mocks.req, mocks.res);
+//test.serial(`http:helloHttp: should handle PUT`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.method = `PUT`;
+//  httpSample.sample.helloHttp(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 403);
-  t.true(mocks.res.send.calledOnce);
-  t.is(mocks.res.send.firstCall.args[0], `Forbidden!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 403);
+//  t.true(mocks.res.send.calledOnce);
+//  t.is(mocks.res.send.firstCall.args[0], `Forbidden!`);
+//});
 
-test.serial(`http:helloHttp: should handle other methods`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.method = `POST`;
-  httpSample.sample.helloHttp(mocks.req, mocks.res);
+//test.serial(`http:helloHttp: should handle other methods`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.method = `POST`;
+//  httpSample.sample.helloHttp(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 500);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], { error: `Something blew up!` });
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 500);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], { error: `Something blew up!` });
+//});
 
-test.serial(`http:helloContent: should handle application/json`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.headers[`content-type`] = `application/json`;
-  mocks.req.body = { name: `John` };
-  httpSample.sample.helloContent(mocks.req, mocks.res);
+//test.serial(`http:helloContent: should handle application/json`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.headers[`content-type`] = `application/json`;
+//  mocks.req.body = { name: `John` };
+//  httpSample.sample.helloContent(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
+//});
 
-test.serial(`http:helloContent: should handle application/octet-stream`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.headers[`content-type`] = `application/octet-stream`;
-  mocks.req.body = Buffer.from(`John`);
-  httpSample.sample.helloContent(mocks.req, mocks.res);
+//test.serial(`http:helloContent: should handle application/octet-stream`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.headers[`content-type`] = `application/octet-stream`;
+//  mocks.req.body = Buffer.from(`John`);
+//  httpSample.sample.helloContent(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
+//});
 
-test.serial(`http:helloContent: should handle text/plain`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.headers[`content-type`] = `text/plain`;
-  mocks.req.body = `John`;
-  httpSample.sample.helloContent(mocks.req, mocks.res);
+//test.serial(`http:helloContent: should handle text/plain`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.headers[`content-type`] = `text/plain`;
+//  mocks.req.body = `John`;
+//  httpSample.sample.helloContent(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
+//});
 
-test.serial(`http:helloContent: should handle application/x-www-form-urlencoded`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  mocks.req.headers[`content-type`] = `application/x-www-form-urlencoded`;
-  mocks.req.body = { name: `John` };
-  httpSample.sample.helloContent(mocks.req, mocks.res);
+//test.serial(`http:helloContent: should handle application/x-www-form-urlencoded`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  mocks.req.headers[`content-type`] = `application/x-www-form-urlencoded`;
+//  mocks.req.body = { name: `John` };
+//  httpSample.sample.helloContent(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello John!`);
+//});
 
-test.serial(`http:helloContent: should handle other`, (t) => {
-  const mocks = getMocks();
-  const httpSample = getSample();
-  httpSample.sample.helloContent(mocks.req, mocks.res);
+//test.serial(`http:helloContent: should handle other`, (t) => {
+//  const mocks = getMocks();
+//  const httpSample = getSample();
+//  httpSample.sample.helloContent(mocks.req, mocks.res);
 
-  t.true(mocks.res.status.calledOnce);
-  t.is(mocks.res.status.firstCall.args[0], 200);
-  t.true(mocks.res.send.calledOnce);
-  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello World!`);
-});
+//  t.true(mocks.res.status.calledOnce);
+//  t.is(mocks.res.status.firstCall.args[0], 200);
+//  t.true(mocks.res.send.calledOnce);
+//  t.deepEqual(mocks.res.send.firstCall.args[0], `Hello World!`);
+//});
