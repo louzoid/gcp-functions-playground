@@ -1,12 +1,12 @@
 {
-  "name": "nodejs-docs-samples-functions-http",
+  "name": "gcp-functions-playground-louzoid",
   "version": "0.0.1",
   "private": true,
-  "license": "Apache-2.0",
-  "author": "Google Inc.",
+  "license": "",
+  "author": "Louzoid (from Google samples)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git"
+    "url": "https://github.com/louzoid/gcp-functions-playground.git"
   },
   "engines": {
     "node": ">=4.3.2"

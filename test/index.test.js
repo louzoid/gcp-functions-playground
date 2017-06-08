@@ -15,47 +15,59 @@
 
 'use strict';
 
-//const Buffer = require('safe-buffer').Buffer;
-//const proxyquire = require(`proxyquire`).noCallThru();
-//const sinon = require(`sinon`);
-//const test = require(`ava`);
-//const tools = require(`@google-cloud/nodejs-repo-tools`);
+const Buffer = require('safe-buffer').Buffer;
+const proxyquire = require(`proxyquire`).noCallThru();
+const sinon = require(`sinon`);
+const test = require(`ava`);
+const tools = require(`@google-cloud/nodejs-repo-tools`);
 
-//function getSample () {
-//  const requestPromise = sinon.stub().returns(new Promise((resolve) => resolve(`test`)));
+function getSample () {
+  const requestPromise = sinon.stub().returns(new Promise((resolve) => resolve(`test`)));
 
-//  return {
-//    sample: proxyquire(`../`, {
-//      'request-promise': requestPromise
-//    }),
-//    mocks: {
-//      requestPromise: requestPromise
-//    }
-//  };
-//}
+  return {
+    sample: proxyquire(`../`, {
+      'request-promise': requestPromise
+    }),
+    mocks: {
+      requestPromise: requestPromise
+    }
+  };
+}
 
-//function getMocks () {
-//  const req = {
-//    headers: {},
-//    get: function (header) {
-//      return this.headers[header];
-//    }
-//  };
-//  sinon.spy(req, `get`);
+function getMocks () {
+  const req = {
+    headers: {},
+    get: function (header) {
+      return this.headers[header];
+    }
+  };
+  sinon.spy(req, `get`);
 
-//  return {
-//    req: req,
-//    res: {
-//      send: sinon.stub().returnsThis(),
-//      json: sinon.stub().returnsThis(),
-//      end: sinon.stub().returnsThis(),
-//      status: sinon.stub().returnsThis()
-//    }
-//  };
-//}
+  return {
+    req: req,
+    res: {
+      send: sinon.stub().returnsThis(),
+      json: sinon.stub().returnsThis(),
+      end: sinon.stub().returnsThis(),
+      status: sinon.stub().returnsThis()
+    }
+  };
+}
 
-//test.beforeEach(tools.stubConsole);
-//test.afterEach.always(tools.restoreConsole);
+test.beforeEach(tools.stubConsole);
+test.afterEach.always(tools.restoreConsole);
+
+test.serial(`http:braintreeToken: should return a braintreeToken`, (t) => {
+  const mocks = getMocks();
+  const httpSample = getSample();
+  mocks.req.body = {};
+  httpSample.sample.braintreeToken(mocks.req, mocks.res);
+
+  t.true(mocks.res.status.calledOnce);
+  t.is(mocks.res.status.firstCall.args[0], 400);
+  t.true(mocks.res.send.calledOnce);
+  //t.is(mocks.res.send.firstCall.args[0], `No message defined!`);
+});
 
 //test.serial(`http:helloworld: should error with no message`, (t) => {
 //  const mocks = getMocks();
