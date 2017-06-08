@@ -169,3 +169,5 @@ function publishDonationMessage(messageBody) {
             console.log("Message " + messageIds[0] + " published.");
         });
 }
+
+//comment
