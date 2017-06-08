@@ -36,7 +36,7 @@ exports.braintreeToken = function braintreeToken(req, res) {
     res.set('Access-Control-Allow-Origin', "*");
     res.set('Access-Control-Allow-Methods', 'GET, POST');
 
-    console.log("Getting a token from merchant id:" + config.merchantId);
+    console.log("Getting a token from merchant id (test):" + config.merchantId);
 
     gateway.clientToken.generate({}, function (err, response) {
         if (err) {
