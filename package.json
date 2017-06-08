@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-docs-samples-functions-http",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": "Google Inc.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git"
+  },
+  "engines": {
+    "node": ">=4.3.2"
+  },
+  "scripts": {
+    "lint": "samples lint",
+    "pretest": "npm run lint",
+    "test": "ava -T 20s --verbose test/*.test.js"
+  },
+  "devDependencies": {
+    "@google-cloud/nodejs-repo-tools": "1.4.7",
+    "ava": "0.19.1",
+    "proxyquire": "1.7.11",
+    "sinon": "2.1.0"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "^0.11.0",
+    "braintree": "^2.0.2",
+    "node-slackr": "^0.1.4",
+    "safe-buffer": "5.0.1"
+  },
+  "cloud-repo-tools": {
+    "requiresKeyFile": true,
+    "requiresProjectId": true
+  }
+}
