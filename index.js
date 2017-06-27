@@ -63,6 +63,7 @@ exports.braintreeDonation = function braintreeDonation(req, res) {
     //var ga = req.body.giftAid;
     var nonce = req.body.payment_method_nonce;
     var ourCompanyName = req.body.clientId;  //not cool but darn handy for our testing purposes
+    var deviceData = req.body.deviceData;
 
     if (!amount || amount === "" || amount === 0) {
         amount = 10;
@@ -86,7 +87,8 @@ exports.braintreeDonation = function braintreeDonation(req, res) {
         paymentMethodNonce: nonce,
         options: {
             submitForSettlement: true
-        }
+        },
+        deviceData: deviceData
     }, function (err, result) {
         if (err) {
             console.log(err);
